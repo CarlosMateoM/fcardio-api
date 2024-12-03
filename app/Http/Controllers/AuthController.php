@@ -46,8 +46,8 @@ class AuthController extends Controller
         $user = new User();
 
         $user->name = $request->input('name');
-        $user->name = $request->input('email');
-        $user->name = $request->input('password');
+        $user->email = $request->input('email');
+        $user->password = $request->input('password');
         
         $user->save();
 
