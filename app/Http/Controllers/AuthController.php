@@ -18,7 +18,7 @@ class AuthController extends Controller
         if (!$user) {
             throw new ModelNotFoundException('Usuario no encontrado');
         }
-
+ 
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
