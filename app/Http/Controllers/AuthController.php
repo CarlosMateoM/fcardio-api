@@ -83,7 +83,7 @@ class AuthController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
 
-        if ($request->has('password')) {
+        if ($request->password !== null) {
             $user->password = $request->input('password');
         }
 
