@@ -7,15 +7,23 @@ use App\Http\Requests\StoreActivityTrackingRequest;
 use App\Http\Requests\UpdateActivityTrackingRequest;
 use App\Http\Resources\ActivityTrackingResource;
 use App\Models\ActivityTracking;
+use Illuminate\Http\Request;
 
 class ActivityTrackingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        $user = $request->user();
+
+        $activityTracking = ActivityTracking::where('user_id', $user->id)
+            ->paginate(10);
+
+
+        return ActivityTrackingResource::collection($activityTracking);
     }
 
 

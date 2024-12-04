@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -18,7 +20,7 @@ class AuthController extends Controller
         if (!$user) {
             throw new ModelNotFoundException('Usuario no encontrado');
         }
- 
+
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
@@ -33,7 +35,6 @@ class AuthController extends Controller
             'access_token' => $token,
         ]);
     }
-
 
     public function register(RegisterRequest $request)
     {
@@ -50,15 +51,46 @@ class AuthController extends Controller
         ], 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'Tokens Revocados'
+        ]);
+    }
+
+    public function getUser(Request $request)
+    {
+        $user = $request->user();
+
+        $user->load('medicalProfile');
+
+        $lastActivity = $user->activityTrackings()->latest()->first();
+
+        return response()->json([
+            'data' => [
+                'user' => new UserResource($user),
+                'last_activity' => $lastActivity,
+            ]
+        ]);
+    }
+
+    public function updateUser(UpdateUserRequest $request)
+    {
+        $user = $request->user();
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+
+        if ($request->has('password')) {
+            $user->password = $request->input('password');
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Usuario actualizado'
         ]);
     }
 }
