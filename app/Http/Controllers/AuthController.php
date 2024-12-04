@@ -19,12 +19,6 @@ class AuthController extends Controller
             throw new ModelNotFoundException('Usuario no encontrado');
         }
 
-        if (!$user->is_enable) {
-            return response()->json([
-                'message' => 'Usuario deshabilitado'
-            ], 401);
-        }
-
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
