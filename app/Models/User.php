@@ -52,4 +52,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(MedicalProfile::class);
     }
+
+
+    public function activityTrackings()
+    {
+        return $this->hasMany(ActivityTracking::class);
+    }                    
 }

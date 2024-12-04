@@ -23,14 +23,14 @@ class StoreMedicalProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'height' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'birthdate' => 'required|date',
-            'blood_type' => 'required|string',
-            'phone_number' => 'required|string',
-            'history' => 'required|string',
-            'emergency_contact_name' => 'required|string',
-            'emergency_contact_phone' => 'required|string',
+            'height'                    => 'required|numeric',
+            'weight'                    => 'required|numeric',
+            'birthdate'                 => 'required|date',
+            'blood_type'                => 'required|string',
+            'phone_number'              => 'required|string',
+            'history'                   => 'required|string',
+            'emergency_contact_name'    => 'required|string',
+            'emergency_contact_phone'   => 'required|string',
         ];
     }
 }

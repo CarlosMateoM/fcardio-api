@@ -24,7 +24,7 @@ class MedicalProfileResource extends JsonResource
             'history'                   => $this->history,
             'emergency_contact_name'    => $this->emergency_contact_name,
             'emergency_contact_phone'   => $this->emergency_contact_phone,
-            'user'                      => new UserResource($this->user),
+            'user'                      => new UserResource($this->whenLoaded('user')),
         ]; 
     }
 }
