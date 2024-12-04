@@ -42,7 +42,7 @@ class AuthController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = $request->input('password');
-        
+
         $user->save();
 
         return response()->json([
