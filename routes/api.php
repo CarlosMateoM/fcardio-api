@@ -12,7 +12,15 @@ Route::get('/user', function (Request $request) {
     
     $user->load('medicalProfile');
 
-    return new UserResource($user);
+    $lastActivity = $user->activityTrackings()->latest()->first();
+
+    return response()->json([
+        'data' => [
+            'user' => new UserResource($user),
+            'last_activity' => $lastActivity,
+        ]
+    ]);
+    
 })->middleware('auth:sanctum');
 
 
